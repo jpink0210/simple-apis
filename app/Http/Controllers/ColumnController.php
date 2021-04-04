@@ -14,12 +14,30 @@ class ColumnController extends Controller
     public function index(Request $request)
     {
         //
-        dump($request);
-
-        return response('123');
+        // dump($request);
+        $data = $this->getData();
+        return response($data);
         // return reponse()->view('welcome');
         // return reponse('123', 200)
         // return redirect('/column')
+    }
+
+    public function getData()
+    {
+        return collect([
+            collect([
+                'id' => 0,
+                'title' => '測試商品一',
+                'Content' => '這是很棒的商品',
+                'price' => 100,
+            ]),
+            collect([
+                'id' => 1,
+                'title' => '測試商品二',
+                'Content' => '這是有點棒的商品',
+                'price' => 50,
+            ])
+        ]);
     }
 
     /**
