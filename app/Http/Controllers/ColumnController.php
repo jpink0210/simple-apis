@@ -11,9 +11,11 @@ class ColumnController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        dump($request);
+
         return response('123');
     }
 
