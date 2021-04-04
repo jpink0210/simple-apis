@@ -17,6 +17,9 @@ class ColumnController extends Controller
         dump($request);
 
         return response('123');
+        // return reponse()->view('welcome');
+        // return reponse('123', 200)
+        // return redirect('/column')
     }
 
     /**
