@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CartItemController extends Controller
 {
@@ -35,6 +36,17 @@ class CartItemController extends Controller
     public function store(Request $request)
     {
         //
+        $form = $request->all();
+        DB::table('cart_items')->insert(
+            [
+                "cart_id" => $form['cart_id'],
+                "product_id" => $form['product_id'],
+                "quantity" => $form['quantity'],
+                "created_at" => now(),
+                "updated_at" => now()
+            ]
+        );
+        return response()->json(true);
     }
 
     /**
@@ -69,6 +81,14 @@ class CartItemController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $form = $request->all();
+        DB::table('cart_items')->where('id', $id)->update(
+            [
+                "quantity" => $form['quantity'],
+                "updated_at" => now()
+            ]
+        );
+        return response()->json(true);
     }
 
     /**
@@ -80,5 +100,7 @@ class CartItemController extends Controller
     public function destroy($id)
     {
         //
+        DB::table('cart_items')->where('id', $id)->delete();
+        return response()->json(true);
     }
 }
