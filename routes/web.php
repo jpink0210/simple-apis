@@ -20,3 +20,5 @@ Route::get('/', function () {
 
 Route::resource('column', 'ColumnController');
 Route::resource('today', 'TodayController');
+Route::resource('product', 'ProductController');
+Route::resource('cart', 'CartController');
