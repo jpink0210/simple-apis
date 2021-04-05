@@ -19,3 +19,4 @@ Route::get('/', function () {
 
 
 Route::resource('column', 'ColumnController');
+Route::resource('today', 'TodayController');
