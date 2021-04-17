@@ -15,9 +15,35 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
-        $products = DB::table('products')->get();
+        /*
+            顯示技巧
+            1. db table
+            $products = DB::table('products')->get();
+            [DB Table]  ([Model Table] / 都是 Laravel ORM)
+
+            2 [Select] 限制欄位  
+            select 可以限制你要的欄位, addSelect 可以補加欄位     
+            $products = DB::table('products')->select('price')->addSelect('quantity')->get();
+    
+            3. [Where] 就是條件篩選
+            a. 一般是用指定
+            b. 或是不等式
+            c. whereRaw 就是 sql 語法
+            $products = DB::table('products')->whereRaw('price > 300')->get();
+    
+            6. [Debug SQL] 
+            用這個方式可以 印出 DB:: 的 sql 語法，來 debug
+            $products = DB::table('products')->where('id', 1)->dd();
+            $products = DB::table('products')->where('id', 1)->dump();
+        */ 
+
+
+
+        $products = DB::table('products')->select('price')->addSelect('quantity')->get();
+
         return response($products);
+        // return response()->json($products);
+
     }
 
     /**
