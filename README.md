@@ -8,6 +8,28 @@ DB_PASSWORD=root
 
 ## --
 
+public/index.php
+是程式的啟動點
+$app = require_once __DIR__.'/../bootstrap/app.php';
+$app 就是這個應用程式，然後被 kernal 啟動
+app/Http/Kernel.php
+會啟動各個環境黨、config 資料夾、registerProvider(Provider 各種強大功能)、middleware、
+設定路由app/Providers/RouteServiceProvider.php
+最後會得到一個 response
+
+## --
+
+app/Http/Kernel.php
+HandleCors
+ValidatePostSize
+VerifyCsrfToken
+
+protected $routeMiddleware = [
+
+
+
+## --
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
 <p align="center">
