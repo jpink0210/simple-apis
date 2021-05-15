@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
+// 自己客製化的 request機制
+use App\Http\Requests\UpdateCartItem;
+
 class CartItemController extends Controller
 {
     /**
@@ -42,7 +45,6 @@ class CartItemController extends Controller
         return response($cart_items);
         
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -79,18 +81,33 @@ class CartItemController extends Controller
         if ($validator->fails()) {
             return response($validator->errors(), 400);
         }
-        // 3. 可以驗證資料格式是否正確
-        // $validateData = $validator->validate();
-        // $form = $request->all();
-        // DB::table('cart_items')->insert(
-        //     [
-        //         "cart_id" => $validateData['cart_id'],
-        //         "product_id" => $validateData['product_id'],
-        //         "quantity" => $validateData['quantity'],
-        //         "created_at" => now(),
-        //         "updated_at" => now()
-        //     ]
-        // );
+        /*
+        3. 可以驗證資料格式是否正確:
+            $validateData = $validator->validate();
+            $form = $request->all();
+            DB::table('cart_items')->insert(
+                [
+                    "cart_id" => $validateData['cart_id'],
+                    "product_id" => $validateData['product_id'],
+                    "quantity" => $validateData['quantity'],
+                    "created_at" => now(),
+                    "updated_at" => now()
+                ]
+            );
+        */
+
+        /*
+          POST: http://127.0.0.1:8000/cart-items?cart_id=&quantity=14&product_id=2
+          resp:
+            {
+                "cart_id": [
+                    "cart id 是必要的"
+                ],
+                "quantity": [
+                    "quantity 的輸入請介於 1 ~ 10 之間"
+                ]
+            }
+        */
 
 
         // 用 postman 測試！！
@@ -155,10 +172,11 @@ class CartItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateCartItem $request, $id)
     {
         //
-        $form = $request->all();
+        // $form = $request->all();
+        $form = $request->validated();
         /*
         [重點] 找出你要更新的那筆資料
             其次才是使用 update function
