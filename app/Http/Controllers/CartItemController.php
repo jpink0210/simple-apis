@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class CartItemController extends Controller
 {
@@ -14,7 +15,6 @@ class CartItemController extends Controller
      */
     public function index()
     {
-
         /*
             4. [Join]
             
@@ -61,7 +61,38 @@ class CartItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        // https://laravel.tw/docs/5.0/validation#available-validation-rules
+
+        // 2. 可以設定中文回覆訊息，加到 Validator 第三個變數。
+        $msgs = [
+            "required" => ":attribute 是必要的",
+            "between" => ":attribute 的輸入請介於 :min ~ :max 之間"
+        ];
+
+        // 1. 建立 $validator, 如果發生錯誤就 response error
+        $validator = Validator::make($request->all(), [
+            'cart_id' => 'required|integer',
+            'product_id' => 'required|integer',
+            'quantity' => 'required|integer|between:1,10'
+        ], $msgs);
+        if ($validator->fails()) {
+            return response($validator->errors(), 400);
+        }
+        // 3. 可以驗證資料格式是否正確
+        // $validateData = $validator->validate();
+        // $form = $request->all();
+        // DB::table('cart_items')->insert(
+        //     [
+        //         "cart_id" => $validateData['cart_id'],
+        //         "product_id" => $validateData['product_id'],
+        //         "quantity" => $validateData['quantity'],
+        //         "created_at" => now(),
+        //         "updated_at" => now()
+        //     ]
+        // );
+
+
         // 用 postman 測試！！
         $form = $request->all();
         DB::table('cart_items')->insert(

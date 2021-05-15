@@ -22,4 +22,4 @@ Route::resource('column', 'ColumnController');
 Route::resource('today', 'TodayController');
 Route::resource('product', 'ProductController');
 Route::resource('cart', 'CartController');
-Route::resource('cart_item', 'CartItemController');
+Route::resource('cart-items', 'CartItemController');
