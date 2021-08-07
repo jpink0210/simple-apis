@@ -11,6 +11,9 @@ class CartItem extends Model
 {
     use HasFactory;
 
+    protected $guarded = [''];
+    protected $hidden = ['updated_at'];
+
     protected $fillable = ['quantity'];
     protected $appends = ['current_price'];
 
@@ -19,6 +22,35 @@ class CartItem extends Model
         return $this->quantity * 10;
     }
 
+    // 當你執行 CartItem 下 product 的函式，他會去找 Product 類別下對應的 product
+    public function product() {
+        return $this->belongsTo(Product::class);
+    }
+
+    public function cart() {
+        return $this->belongsTo(Cart::class);
+    }
+    /*
+        測試
+        php artisan tinker
+        >>>> CartItem::find(3)
+
+        >>>> CartItem::find(3)->product()
+                                這就是執行 product 這個 public function
+                                但寫到這裏，他只會跟你說，這是一個 function
+        >>>> CartItem::find(3)->product()->get()
+                                get()之後，就會拿到「含有」對應的 product_id 之 product
+                                的 「collection」
+                                e.g. [ {id: 2, ...} ]
+        >>>> CartItem::find(3)->product()->get()->first()
+            這個才是該 product_id 的 product，所有的 attribute
+        然後
+        >>>> CartItem::find(3)->product
+        執行這行，跟上面這個是一模一樣的。
+
+        主要也是 belongs 是 Ｘ對一
+
+        */
 }
 /*
     eloquent 好處一： update 會自動幫你 update 時間, timestamp
