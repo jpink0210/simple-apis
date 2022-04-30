@@ -11,10 +11,10 @@ class CartItem extends Model
 {
     use HasFactory;
 
-    protected $guarded = [''];
-    protected $hidden = ['updated_at'];
+    protected $guarded = ['']; // 黑名單不擋 全開
+    // protected $hidden = ['updated_at'];
 
-    protected $fillable = ['quantity'];
+    // protected $fillable = ['quantity']; // 也不限制僅能改變的欄位，或是你去加 *
     protected $appends = ['current_price'];
 
     public function getCurrentPriceAttribute()

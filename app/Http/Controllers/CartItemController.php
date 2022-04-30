@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Validator;
 // 自己客製化的 request機制
 use App\Http\Requests\UpdateCartItem;
 
+use App\Models\Cart;
+use App\Models\CartItem;
+
 class CartItemController extends Controller
 {
     /**
@@ -109,20 +112,31 @@ class CartItemController extends Controller
             }
         */
 
-
-        // 用 postman 測試！！
+        /*
+            // 用 postman 測試！！
+            $form = $request->all();
+            DB::table('cart_items')->insert(
+                [
+                    "cart_id" => $form['cart_id'],
+                    "product_id" => $form['product_id'],
+                    "quantity" => $form['quantity'],
+                    "created_at" => now(),
+                    "updated_at" => now()
+                ]
+            );
+            return response()->json(true); // 用 json 才是前端常看到的值
+        */
         $form = $request->all();
-        DB::table('cart_items')->insert(
+        $cart = Cart::find($form['cart_id']);
+        $result = $cart->cartItems()->create(
             [
-                "cart_id" => $form['cart_id'],
                 "product_id" => $form['product_id'],
-                "quantity" => $form['quantity'],
-                "created_at" => now(),
-                "updated_at" => now()
+                "quantity" => $form['quantity']
             ]
         );
-        return response()->json(true); // 用 json 才是前端常看到的值
-    
+        return response()->json($result);
+
+
         /*
             [新增] 重點
             1.你取 Table 的 ORM 技巧
