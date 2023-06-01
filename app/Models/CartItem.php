@@ -10,17 +10,24 @@ use Illuminate\Database\Eloquent\Model;
 class CartItem extends Model
 {
     use HasFactory;
-
+    /*
+        去設定 黑白名單，這個行為稱作
+        Eloquent ORM 的 Mass Assignment
+    */
     protected $guarded = ['']; // 黑名單不擋 全開
-    // protected $hidden = ['updated_at'];
+    // protected $hidden = ['updated_at', 'xxxx']; // 不想要被露出的欄位
 
     // protected $fillable = ['quantity']; // 也不限制僅能改變的欄位，或是你去加 *
-    protected $appends = ['current_price'];
 
+
+    protected $appends = ['current_price']; // 這是設定自製屬性
+    // 這個函式名稱是 專用的 命名法 get Xxxxx Attribute
     public function getCurrentPriceAttribute()
     {
         return $this->quantity * 10;
     }
+
+
 
     // 當你執行 CartItem 下 product 的函式，他會去找 Product 類別下對應的 product
     public function product() {
