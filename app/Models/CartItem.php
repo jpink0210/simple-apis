@@ -27,8 +27,9 @@ class CartItem extends Model
         return $this->quantity * 10;
     }
 
-
-
+    /*
+        Eloquent 建立關聯
+    */
     // 當你執行 CartItem 下 product 的函式，他會去找 Product 類別下對應的 product
     public function product() {
         return $this->belongsTo(Product::class);
@@ -54,6 +55,7 @@ class CartItem extends Model
         然後
         >>>> CartItem::find(3)->product
         執行這行，跟上面這個是一模一樣的。
+        沒有括號就是「屬性」所以只有一筆，上面是集合，所以要取 first
 
         主要也是 belongs 是 Ｘ對一
 
