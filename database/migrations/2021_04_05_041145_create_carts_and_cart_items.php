@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\User;
 
 class CreateCartsAndCartItems extends Migration
 {
@@ -19,6 +20,9 @@ class CreateCartsAndCartItems extends Migration
         // });
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
+            // $table->foreignIdFor(User::class);
+            // https://laravel.com/docs/10.x/migrations#column-method-foreignIdFor
+            // $table->boolean('bought')->nullable()->default(false)->comment('買了沒');
             $table->timestamps();
         });
         Schema::create('cart_items', function (Blueprint $table) {

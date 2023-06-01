@@ -29,7 +29,7 @@ class CartController extends Controller
 
         $cartItems = DB::table('cart_items')->where('cart_id', $cart->id)->get();
 
-        // 然後重新組裝一下
+        // 然後重新組裝一下, 原本拿到是一個結構特殊的 object, 要轉換成 collection
         $cart = collect($cart);
         $cart['items'] = collect($cartItems);
         // 資料庫的東西，Facades\DB 取出來通常會看不懂，所以要加上 collect
