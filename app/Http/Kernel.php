@@ -51,6 +51,9 @@ class Kernel extends HttpKernel
      * These middleware may be assigned to groups or used individually.
      *
      * @var array
+     * 
+     * 說明：每一個 middleware class 裡面，其實只是一層層的檢查，一個查完 next 下一個 
+     * 
      */
     protected $routeMiddleware = [
         'auth' => \App\Http\Middleware\Authenticate::class,
