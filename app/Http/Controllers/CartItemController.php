@@ -143,10 +143,10 @@ class CartItemController extends Controller
             2. insert && request   
 
             [新增技巧] insertGetId
-            利用以下方式可以得到:你新增的檔案的 流水號id
+            利用以下方式可以得到:你新增的檔案的 !!「流水號id」!!
             $id =  DB::table('cart_items')->insertGetId([...])
 
-            [新增技巧] increment
+            [新增技巧] increment 直接針對 某個欄位 增加值，就不用用覆寫。
 
             DB::table('cart_items')
             ->where('id', '2')
@@ -154,6 +154,8 @@ class CartItemController extends Controller
 
             針對欄位，可以增加值。
             如果不寫後面的數值，預設是增加 1
+
+            dd, dump, enableQueryLog: debug 工具
         */
     }
 
