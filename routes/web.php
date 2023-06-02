@@ -23,3 +23,6 @@ Route::resource('today', 'TodayController');
 Route::resource('product', 'ProductController');
 Route::resource('cart', 'CartController');
 Route::resource('cart-items', 'CartItemController');
+
+// Auth Login
+Route::post('signup', 'AuthController@signup');

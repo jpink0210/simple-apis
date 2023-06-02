@@ -2,9 +2,6 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-
-
 // 下這行指令  php artisan make:request UpdateCartItem
 
 // PUT http://127.0.0.1:8000/cart-items/2?quantity=14
