@@ -53,4 +53,9 @@ class AuthController extends Controller
         return response(['token' => $tokenResult->accessToken]);
         // jwt.io 可以解譯
     }
+
+    public function user(Request $request)
+    {
+        return response()->json($request->user());
+    }
 }

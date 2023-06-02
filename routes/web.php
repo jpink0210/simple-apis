@@ -27,3 +27,12 @@ Route::resource('cart-items', 'CartItemController');
 // Auth Login
 Route::post('signup', 'AuthController@signup');
 Route::post('login', 'AuthController@login');
+
+Route::group(
+    [
+    'middleware' => 'auth:api'
+],
+    function () {
+        Route::get('user', 'AuthController@user');
+    }
+);
