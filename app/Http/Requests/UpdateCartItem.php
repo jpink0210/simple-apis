@@ -19,6 +19,14 @@ use Illuminate\Foundation\Http\FormRequest;
         "0": 400
     }
 */
+
+/*
+    Validators 進階使用 [二]
+        這個類繼承 APIRequest, 就是為了製作 客製化的 $request
+        這個客製化就是為 $request 灌上 validator 的 attribute
+        authorize 要開開
+*/
+
 class UpdateCartItem extends APIRequest
 {
     /**

@@ -11,6 +11,7 @@ use App\Http\Requests\UpdateCartItem;
 
 use App\Models\Cart;
 use App\Models\CartItem;
+use App\Models\Product;
 
 class CartItemController extends Controller
 {
@@ -75,7 +76,13 @@ class CartItemController extends Controller
             "between" => ":attribute 的輸入請介於 :min ~ :max 之間"
         ];
 
-        // 1. 建立 $validator, 如果發生錯誤就 response error
+        /*
+        1. 建立 $validator
+            Validator 這個 facade 只是拿 $request 建立一個有驗證特性的物件。
+            驗證後，如果發生錯誤就 response error by ->fails()
+            ->validate(); 這個動作才是把物件轉換成 資料庫可以使用的 資料格式。
+
+        */
         $validator = Validator::make($request->all(), [
             'cart_id' => 'required|integer',
             'product_id' => 'required|integer',
@@ -84,6 +91,22 @@ class CartItemController extends Controller
         if ($validator->fails()) {
             return response($validator->errors(), 400);
         }
+
+        $validatedData = $validator->validate();
+
+        $product = Product::find($validatedData['product_id']);
+        if (!$product->checkQuantity($validatedData['quantity'])) {
+            return response($product->title.'數量不足', 400);
+        }
+
+        $cart = Cart::find($validatedData['cart_id']);
+        $result = $cart->cartItems()->create(
+            ['product_id' => $product->id,
+             'quantity' => $validatedData['quantity']]
+        );
+
+        return response()->json($result);
+
         /*
         3. 可以驗證資料格式是否正確:
             $validateData = $validator->validate();
@@ -126,7 +149,7 @@ class CartItemController extends Controller
             );
             return response()->json(true); // 用 json 才是前端常看到的值
         */
-        
+
         /*
           這裡是原版
           先是講解 Eloquent 關聯，用於 Controller 實作的改變
@@ -200,22 +223,37 @@ class CartItemController extends Controller
      */
     public function update(UpdateCartItem $request, $id)
     {
-        //
-        // $form = $request->all();
-        $form = $request->validated();
         /*
-        [重點] 找出你要更新的那筆資料
-            其次才是使用 update function
-        */ 
-        
-        // 用 postman 測試！！
-        DB::table('cart_items')->where('id', $id)->update(
-            [
-                "quantity" => $form['quantity'],
-                "updated_at" => now()
-            ]
-        );
+        Validators 進階使用 [三]
+            UpdateCartItem $request 這裡是灌入的關鍵
+            $request->validated(), 這裡與上面比對，這是 validator 特有的函式
+            不是 $request 的。
+            fill: 先填在物件上，但是不會存入資料庫，因為你中間可能要改來改去。
+            save: 最後才真的存入「資料庫」。
+        */
+        $validatedData = $request->validated();
+        $item = CartItem::find($id);
+        $item->fill(['quantity' => $validatedData['quantity']]);
+        // do something
+        $item->save();
+
         return response()->json(true);
+
+
+        /* 以下舊版 Query Builder */
+        /*
+        [重點]
+            1. update()
+            2. PUT 使用前要找出那筆資料
+        */
+        // $form = $request->all();
+        // DB::table('cart_items')->where('id', $id)->update(
+        //     [
+        //         "quantity" => $form['quantity'],
+        //         "updated_at" => now()
+        //     ]
+        // );
+        // return response()->json(true);
     }
 
     /**
