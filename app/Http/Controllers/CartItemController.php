@@ -136,15 +136,15 @@ class CartItemController extends Controller
           4. 只不過，這裡隸屬於 Cart 之下的「主體」，好處就是你不用再帶 cartId
           5. 相較於 DB:insert 不用時間戳，也是因為 Model 有 timestamps
         */
-        $form = $request->all();
-        $cart = Cart::find($form['cart_id']);
-        $result = $cart->cartItems()->create(
-            [
-                "product_id" => $form['product_id'],
-                "quantity" => $form['quantity']
-            ]
-        );
-        return response()->json($result);
+        // $form = $request->all();
+        // $cart = Cart::find($form['cart_id']);
+        // $result = $cart->cartItems()->create(
+        //     [
+        //         "product_id" => $form['product_id'],
+        //         "quantity" => $form['quantity']
+        //     ]
+        // );
+        // return response()->json($result);
 
 
         /*
