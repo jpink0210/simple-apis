@@ -42,11 +42,12 @@ return [
         ],
 
         'api' => [
-            'driver' => 'token',
+            'driver' => 'passport',
             'provider' => 'users',
             'hash' => false,
         ],
     ],
+    // passport 這裡的修改是指，把以後 user 認證的功能，由 passport 接手 
 
     /*
     |--------------------------------------------------------------------------

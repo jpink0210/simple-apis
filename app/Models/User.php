@@ -8,9 +8,25 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Cart;
 
+/*
+[Auth]
+https://laravel.com/docs/10.x/passport#installation
+
+composer require laravel/passport
+or
+composer require laravel/passport -W
+
+php artisan migrate 先為了這個套件，把資料庫裝一些Table
+php artisan passport:install 
+
+*/
+use Laravel\Passport\HasApiTokens;
+
+
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable;
+
 
     /**
      * The attributes that are mass assignable.
