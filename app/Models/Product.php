@@ -17,4 +17,12 @@ class Product extends Model
         Product::find(1)->cartItems
         這時候會拿到 collection, 因為 一對多
     */
+    public function checkQuantity($quantity)
+    {
+        if ($this->quantity < $quantity) {
+            return false;
+        }
+
+        return true;
+    }
 }

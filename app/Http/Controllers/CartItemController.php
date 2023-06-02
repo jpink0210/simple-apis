@@ -238,6 +238,12 @@ class CartItemController extends Controller
         $item->save();
 
         return response()->json(true);
+        /*
+            postman
+            http://127.0.0.1:8000/cart-items/2?id=1&quantity=1
+            改成
+            http://127.0.0.1:8000/cart-items/1?quantity=6
+        */
 
 
         /* 以下舊版 Query Builder */
