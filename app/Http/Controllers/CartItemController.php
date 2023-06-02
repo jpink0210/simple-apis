@@ -126,6 +126,16 @@ class CartItemController extends Controller
             );
             return response()->json(true); // 用 json 才是前端常看到的值
         */
+        
+        /*
+          這裡是原版
+          先是講解 Eloquent 關聯，用於 Controller 實作的改變
+          1. [觀念] 這裡是新增 cartItems, 必然是以 cartItems 為主體
+          2. $cart->cartItems() 這裡用的就是關聯, cartItems belongsTo Cart
+          3. ->cartItems() 使用這個括弧，本身就代表 cartItems 為主體
+          4. 只不過，這裡隸屬於 Cart 之下的「主體」，好處就是你不用再帶 cartId
+          5. 相較於 DB:insert 不用時間戳，也是因為 Model 有 timestamps
+        */
         $form = $request->all();
         $cart = Cart::find($form['cart_id']);
         $result = $cart->cartItems()->create(
