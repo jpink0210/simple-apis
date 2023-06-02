@@ -58,4 +58,13 @@ class AuthController extends Controller
     {
         return response()->json($request->user());
     }
+
+    public function logout(Request $request)
+    {
+        // revoke 也是這個 套件api 的功能，直接使其失效，讓 table 的 revoke = 1
+        $request->user()->token()->revoke();
+        return response()->json([
+            'message' => 'Successfully logged out'
+        ]);
+    }
 }
