@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Requests\CreateUser;
 
+use Illuminate\Support\Facades\Auth;
+
+
 /*
     pa make:controller AuthController
 
@@ -26,5 +29,28 @@ class AuthController extends Controller
         ]);
         $user->save();
         return response('success', 201);
+    }
+
+    public function login(Request $request)
+    {
+        $validatedData = $request->validate([
+            'email' => 'required|string|email',
+            'password' => 'required|string'
+        ]);
+
+        if (!Auth::attempt($validatedData)) {
+            return response('Unauthorized', 401);
+        }
+        // auth 套件的功能，如果 login 成功，自動把資料帶入 $request 裡面
+        $user = $request->user();
+
+        // createToken 是 HasApiTokens 我們自己當初加的功能(官網)
+        // composer require lcobucci/jwt:3.3.3
+        $tokenResult = $user->createToken('Token');
+        // token->save(); 當初安裝，就有幫 token 裝一個 table 來儲存 token
+        $tokenResult->token->save();
+
+        return response(['token' => $tokenResult->accessToken]);
+        // jwt.io 可以解譯
     }
 }
