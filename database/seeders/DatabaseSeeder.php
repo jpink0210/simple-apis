@@ -13,6 +13,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        // 這裡是系統原本的提示，告訴你要自己 import Model 來操作
         // \App\Models\User::factory(10)->create();
+
+        // $this->call(ProductSeeder::class); 可以互 call 其他 seeder
     }
 }
