@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Cart;
 
 class CartController extends Controller
 {
@@ -14,28 +15,36 @@ class CartController extends Controller
      */
     public function index()
     {
-        //
-        $cart = DB::table('carts')->get()->first();
-        if (empty($cart)) {
-            DB::table('carts')->insert(
-                [
-                    "created_at" => now(),
-                    "updated_at" => now()
-                ]
-                );
+        /*
             $cart = DB::table('carts')->get()->first();
-        }
-        // dump($cart);
+            if (empty($cart)) {
+                DB::table('carts')->insert(
+                    [
+                        "created_at" => now(),
+                        "updated_at" => now()
+                    ]
+                    );
+                $cart = DB::table('carts')->get()->first();
+            }
+            // dump($cart);
 
-        $cartItems = DB::table('cart_items')->where('cart_id', $cart->id)->get();
+            $cartItems = DB::table('cart_items')->where('cart_id', $cart->id)->get();
 
-        // 然後重新組裝一下, 原本拿到是一個結構特殊的 object, 要轉換成 collection
-        $cart = collect($cart);
-        $cart['items'] = collect($cartItems);
-        // 資料庫的東西，Facades\DB 取出來通常會看不懂，所以要加上 collect
+            // 然後重新組裝一下, 原本拿到是一個結構特殊的 object, 要轉換成 collection
+            $cart = collect($cart);
+            $cart['items'] = collect($cartItems);
+            // 資料庫的東西，Facades\DB 取出來通常會看不懂，所以要加上 collect
+            return response($cart);
+        */
+        /*
+            1. Eloquent 改寫
+            2. :: 是所有 ORM 取出來的資料物件的操作
+            3. where: 如果沒有找到有此userId, 就藉此產生之 first vs firstOrCreate
+        */
+        $user = auth()->user();
+        $cart = Cart::with('cartItems')->where('user_id', $user->id)->firstOrCreate(['user_id' => $user->id]);
         
         return response($cart);
-        
     }
 
     /**

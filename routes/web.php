@@ -21,8 +21,7 @@ Route::get('/', function () {
 Route::resource('column', 'ColumnController');
 Route::resource('today', 'TodayController');
 Route::resource('product', 'ProductController');
-Route::resource('cart', 'CartController');
-Route::resource('cart-items', 'CartItemController');
+
 
 // Auth Login
 Route::post('signup', 'AuthController@signup');
@@ -35,5 +34,8 @@ Route::group(
     function () {
         Route::get('user', 'AuthController@user');
         Route::get('logout', 'AuthController@logout');
+
+        Route::resource('cart', 'CartController');
+        Route::resource('cart-items', 'CartItemController');
     }
 );
