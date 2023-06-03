@@ -22,4 +22,14 @@ class Cart extends Model
         >>> Cart::find(1)->cartItems
 
     */
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    public function order()
+    {
+        // 一個使用者的一台購物車，同時只能創造一筆訂單
+        return $this->hasOne(Order::class);
+    }
 }

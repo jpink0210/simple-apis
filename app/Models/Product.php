@@ -25,4 +25,10 @@ class Product extends Model
 
         return true;
     }
+
+    public function orderItems()
+    {
+        // 代表有非常多 訂單 下面的 訂貨，貨源是這個產品
+        return $this->hasMany(OrderItem::class);
+    }
 }
