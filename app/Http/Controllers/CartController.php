@@ -42,7 +42,9 @@ class CartController extends Controller
             3. where: 如果沒有找到有此userId, 就藉此產生之 first vs firstOrCreate
         */
         $user = auth()->user();
-        $cart = Cart::with('cartItems')->where('user_id', $user->id)->firstOrCreate(['user_id' => $user->id]);
+        $cart = Cart::with('cartItems')->where('user_id', $user->id)
+        ->where('checkouted', false)
+        ->firstOrCreate(['user_id' => $user->id]);
         
         return response($cart);
     }

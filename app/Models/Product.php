@@ -9,6 +9,8 @@ class Product extends Model
 {
     use HasFactory;
 
+    protected $guarded = [''];
+
     public function cartItems()
     {
         return $this->hasMany(CartItem::class);
@@ -16,6 +18,9 @@ class Product extends Model
     /*
         Product::find(1)->cartItems
         這時候會拿到 collection, 因為 一對多
+    */
+    /*
+        資料邏輯
     */
     public function checkQuantity($quantity)
     {

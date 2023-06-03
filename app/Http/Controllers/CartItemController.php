@@ -95,6 +95,9 @@ class CartItemController extends Controller
         $validatedData = $validator->validate();
 
         $product = Product::find($validatedData['product_id']);
+        /*
+            商務邏輯
+        */
         if (!$product->checkQuantity($validatedData['quantity'])) {
             return response($product->title.'數量不足', 400);
         }

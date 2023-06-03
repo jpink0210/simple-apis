@@ -37,6 +37,16 @@ class Cart extends Model
         Model 處理資料面的問題，資料的結構
     */
     public function checkout() {
+
+
+        foreach ($this->cartItems as $cartItem) {
+            $product = $cartItem->product;
+            if (!$product->checkQuantity($cartItem->quantity)) {
+                return response($product->title.'數量不足');
+                // 一發生錯誤就會 shut down 不會往下跑
+            }
+        }
+
         /*
             $this->order() 就是用這個關聯，用 Order Model 創造了一個 order
             $this->user_id 這個 this 是 cart 的 this
@@ -54,6 +64,8 @@ class Cart extends Model
                 'product_id' => $cartItem->product_id,
                 'price' => $cartItem->product->price
             ]);
+            $cartItem->product->update(['quantity' => $product->quantity - $cartItem->quantity]);
+
         }
         // 指這台購物車被結帳了
         $this->update(['checkouted' => true]);
