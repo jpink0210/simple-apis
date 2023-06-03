@@ -47,6 +47,30 @@ class CartController extends Controller
         return response($cart);
     }
 
+    /*
+        商務邏輯
+    */
+    public function checkout()
+    {
+        $user = auth()->user();
+        /*
+            1. $user->carts() user 要招喚 carts() 有個前提是
+                UserModel 下面要有 Carts Func 也就是關聯，這邊是 hasMany 才能操作 Cart Model
+            2. with('cartItems') 是 Cart Model 的能耐，操作的前提，與上同理。
+                所以以後寫扣有報錯，你就要去看 ORM 你的 Model 關聯有沒有搞好。
+                也可解讀成：先寫好關聯，是為了 Controller 好操作 Eloquent Function
+            3. where 是條件，搜出一打，要 first()
+            4. $cart->checkout(); 操作的是 Cart Model 就非常合理了
+        */
+        $cart = $user->carts()->where('checkouted', false)->with('cartItems')->first();
+        if ($cart) {
+            $result = $cart->checkout();
+            return response(['result' => $result]);
+        } else {
+            return response('empty cart', 400);
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *

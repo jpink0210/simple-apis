@@ -37,5 +37,7 @@ Route::group(
 
         Route::resource('cart', 'CartController');
         Route::resource('cart-items', 'CartItemController');
+
+        Route::post('carts/checkout', 'CartController@checkout');
     }
 );
