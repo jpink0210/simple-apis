@@ -57,6 +57,7 @@ class Cart extends Model
         }
         // 指這台購物車被結帳了
         $this->update(['checkouted' => true]);
+        $order->orderItems; // 多這行，return 會多帶一個欄位 orderItems
         return $order;
 
         /*
