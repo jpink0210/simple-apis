@@ -52,8 +52,9 @@ class Kernel extends HttpKernel
      *
      * @var array
      * 
-     * 說明：每一個 middleware class 裡面，其實只是一層層的檢查，一個查完 next 下一個 
-     * 
+     * 說明：每一個 middleware class 裡面，其實只是一層層的檢查，一個查完 next 下一個
+     * 這邊是進入點，要新增 middleware 可以填入
+     * pa make:middleware Axxx
      */
     protected $routeMiddleware = [
         'auth' => \App\Http\Middleware\Authenticate::class,
