@@ -41,3 +41,5 @@ Route::group(
         Route::post('carts/checkout', 'CartController@checkout');
     }
 );
+
+Route::resource('admin/orders', 'Admin\OrderController');
