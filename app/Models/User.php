@@ -5,6 +5,10 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+/*
+    這是因為 user 有預設載入 Notifiable
+    所以 user model 可以恣意使用 notify() 的 operator
+*/
 use Illuminate\Notifications\Notifiable;
 use App\Models\Cart;
 

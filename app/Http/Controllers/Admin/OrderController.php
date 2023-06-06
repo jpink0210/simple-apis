@@ -7,10 +7,12 @@ use App\Models\Order;
 
 use App\Http\Controllers\Controller;
 use App\Notifications\OrderDeliver;
+
 use App\Exports\OrdersExport;
 use App\Exports\OrdersMultipleExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\DataTables\OrdersDataTable;
+
 
 class OrderController extends Controller
 {
@@ -57,7 +59,7 @@ class OrderController extends Controller
         return $ordersDataTable->render('admin.orders.datatables');
     }
 
-    public function delivery(Request $request, $id)
+    public function delivery($id)
     {
         $order = Order::find($id);
         if ($order->is_shipped) {

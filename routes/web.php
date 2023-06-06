@@ -42,4 +42,5 @@ Route::group(
     }
 );
 
+Route::post('admin/orders/{id}/delivery', 'Admin\OrderController@delivery');
 Route::resource('admin/orders', 'Admin\OrderController');
