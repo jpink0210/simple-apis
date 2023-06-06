@@ -24,6 +24,9 @@
   </div>
 </div>
 <script>
+/*
+  jQuery 示範 in 後端
+*/
   $('.read_notification').click(function(){
     var $this = $(this);
     $.ajax({

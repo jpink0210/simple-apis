@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Product;
 use App\Models\User;
+/*
+    這也是 Laravel 預設準備的
+    就是針對 notifications 這張邊的 Model
+*/
 use Illuminate\Notifications\DatabaseNotification;
 
 class WebController extends Controller
@@ -41,6 +45,10 @@ class WebController extends Controller
         return view('webs.contact_us', ['notifications' => $this->notifications]);
     }
 
+
+    /*
+        Notification 有個 read_at 的變數，所謂已讀，就是將它填值(timestamp)
+    */
     public function readNotification(Request $request)
     {
         $id = $request->all()['id'];
