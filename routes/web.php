@@ -23,6 +23,12 @@ Route::resource('today', 'TodayController');
 Route::resource('product', 'ProductController');
 
 
+
+Route::get('/', 'WebController@index');
+Route::get('/contactUs', 'WebController@contactUs');
+Route::post('/readNotification', 'WebController@readNotification');
+
+
 // Auth Login
 Route::post('signup', 'AuthController@signup');
 Route::post('login', 'AuthController@login');
