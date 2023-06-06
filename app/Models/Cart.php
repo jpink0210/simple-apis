@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+
+use Exception;
 
 class Cart extends Model
 {
@@ -38,53 +41,73 @@ class Cart extends Model
     */
     public function checkout() {
 
-
-        foreach ($this->cartItems as $cartItem) {
-            $product = $cartItem->product;
-            if (!$product->checkQuantity($cartItem->quantity)) {
-                return response($product->title.'數量不足');
-                // 一發生錯誤就會 shut down 不會往下跑
+        /*
+            另外一個寫法
+            DB::beginTransaction();
+            try {
+                // ...
+                DB:commit();
+                return $order;
+            } catch (\Throwable $th) {
+                //throw $th;
+                DB::rollback();
+                return 'some error msg';
             }
-        }
-
-        /*
-            $this->order() 就是用這個關聯，用 Order Model 創造了一個 order
-            $this->user_id 這個 this 是 cart 的 this
-            測試：
-                pa tinker  
-                Cart::all()->first()->checkout()
-                // 會在 order table 下面產生一筆新的訂單。  
         */
-        $order = $this->order()->create([
-            'user_id' => $this->user_id
-        ]);
 
-        foreach ($this->cartItems as $cartItem) {
-            $order->orderItems()->create([
-                'product_id' => $cartItem->product_id,
-                'price' => $cartItem->product->price
+        $result = DB::transaction(function () {
+
+            foreach ($this->cartItems as $cartItem) {
+                $product = $cartItem->product;
+                if (!$product->checkQuantity($cartItem->quantity)) {
+                    return response($product->title.'數量不足');
+                    // 一發生錯誤就會 shut down 不會往下跑
+                }
+            }
+
+            // throw new Exception("Error Processing Request", 1);
+
+            /*
+                $this->order() 就是用這個關聯，用 Order Model 創造了一個 order
+                $this->user_id 這個 this 是 cart 的 this
+                測試：
+                    pa tinker
+                    Cart::all()->first()->checkout()
+                    // 會在 order table 下面產生一筆新的訂單。
+            */
+            $order = $this->order()->create([
+                'user_id' => $this->user_id
             ]);
-            $cartItem->product->update(['quantity' => $product->quantity - $cartItem->quantity]);
 
-        }
-        // 指這台購物車被結帳了
-        $this->update(['checkouted' => true]);
-        $order->orderItems; // 多這行，return 會多帶一個欄位 orderItems
-        return $order;
+            foreach ($this->cartItems as $cartItem) {
+                $order->orderItems()->create([
+                    'product_id' => $cartItem->product_id,
+                    'price' => $cartItem->product->price
+                ]);
+                $cartItem->product->update(['quantity' => $product->quantity - $cartItem->quantity]);
 
-        /*
-            用人的角度來思考一下，從頭到位發生了什麼事情：
+            }
+            // 指這台購物車被結帳了
+            $this->update(['checkouted' => true]);
+            $order->orderItems; // 多這行，return 會多帶一個欄位 orderItems
+            return $order;
 
-            商務邏輯：
-            先找一個 user 有 checkout=0 的訂單，下單！
+            /*
+                用人的角度來思考一下，從頭到位發生了什麼事情：
 
-            資料邏輯
-            1. 建立一筆 order
-            2. 建立多筆 orderItems
-            3. checkout=1
+                商務邏輯：
+                先找一個 user 有 checkout=0 的訂單，下單！
 
-            反向思考：
-            1. 手動改 checkout=0 就可以重新使用那台購物車了
-        */
+                資料邏輯
+                1. 建立一筆 order
+                2. 建立多筆 orderItems
+                3. checkout=1
+
+                反向思考：
+                1. 手動改 checkout=0 就可以重新使用那台購物車了
+            */
+        });
+
+        return $result;
     }
 }
