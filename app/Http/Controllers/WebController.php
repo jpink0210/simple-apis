@@ -11,10 +11,14 @@ use Illuminate\Notifications\DatabaseNotification;
 class WebController extends Controller
 {
     public $notifications = [];
+    /*
+        同個 route 之間有要公用的變數
+        可以用 __construct 初始化存入 class 裡面
+    */
     public function __construct()
     {
         $user = auth()->user() ? auth()->user() : User::find(1);
-        $this->notifications = $user->notifications;
+        $this->notifications = $user->notifications ?? [];
     }
     /**
      * Display a listing of the resource.

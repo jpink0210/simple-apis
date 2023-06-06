@@ -8,10 +8,11 @@
         <a class="nav-link" href="/contactUs">聯絡我們</a>
       </li>
     </ul>
+    <!-- data-target 用一個 id 去綁定 modal -->
     </div>
       <input class="btn btn-primary" data-toggle="modal" data-target="#notification" type="button" value="通知">
     </div>
   </div>
 </nav>
-
+<!-- 綁定的 modal -->
 @include('layouts.modal')
