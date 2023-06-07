@@ -42,7 +42,10 @@ class ProductObserver
         // dd($product);
         $changes = $product->getChanges();
         if (isset($changes['quantity']) && $product->quantity > 0) {
-            
+            // pa make:notification ProductReplenish
+            foreach ($product->favorited_users as $user) {
+                $user->notify(new ProductReplenish($product));
+            }
         }
     }
 
