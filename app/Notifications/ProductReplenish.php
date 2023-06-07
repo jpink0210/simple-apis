@@ -19,9 +19,12 @@ class ProductReplenish extends Notification
      * @return void
      */
 
-    public function __construct()
+    protected $product;
+
+    public function __construct($product)
     {
         //
+        $this->product = $product;
     }
 
     /**
@@ -32,7 +35,8 @@ class ProductReplenish extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        // 2. 改 via
+        return ['database'];
     }
 
     /**
@@ -57,7 +61,9 @@ class ProductReplenish extends Notification
      */
     public function toArray($notifiable)
     {
+        // 1. 加上 msg
         return [
+            'msg' => 'your product '.$this->product->title.' replenished.'
         ];
     }
 }

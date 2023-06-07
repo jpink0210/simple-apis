@@ -8,6 +8,8 @@ use App\Models\Product;
  * 針對某個 model 做觀察者，crud 都會監聽
  * pa make:observer ProductObserver --model=Product
  */
+use App\Notifications\ProductReplenish;
+
 
 class ProductObserver
 {
@@ -43,10 +45,15 @@ class ProductObserver
         $changes = $product->getChanges();
         if (isset($changes['quantity']) && $product->quantity > 0) {
             // pa make:notification ProductReplenish
+            // foreach ($product->favorited_users()->get() as $user) {
             foreach ($product->favorited_users as $user) {
                 $user->notify(new ProductReplenish($product));
             }
         }
+        /**
+         * pa tinker
+         * Product::first()->update(['quantity'=>47])
+         */
     }
 
     /**
