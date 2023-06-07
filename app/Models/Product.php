@@ -42,4 +42,13 @@ class Product extends Model
         // 第二個參數：針對哪個標去查詢
         return $this->belongsToMany(User::class, 'favorites');
     }
+
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'attachable');
+        /** 多型關係
+         * attachable_type
+         * attachable_id
+        */
+    }
 }
