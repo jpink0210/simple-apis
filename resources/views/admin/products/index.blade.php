@@ -63,6 +63,18 @@
 </div>
 
 <script>
+/*
+  enctype: 強迫 上傳的檔案類型，否則只是傳一堆無用的文字串
+  type="hidden" ： 不想要暴露的資料，自己用 jq 灌
+  form - action 的路徑是自己設計的
+  modal：習慣 modal 視窗綁 id 操作的行為
+
+  切版流程與反思
+  1. 先建立頁面架構，準確就好，細節忽略
+  2. 服務流程串，設計並且串立
+  3. 關鍵功能 8成先完成，最好是後端都串到端口上
+  以上純粹切版，理論上都是直接完成。
+*/
   $('.upload_image').click(function(){
     $('#product_id').val($(this).data('id'))
     $('#upload_image').modal()
