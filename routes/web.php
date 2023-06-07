@@ -57,3 +57,5 @@ Route::post('admin/tools/updateProductPrice', 'Admin\ToolController@updateProduc
 就排程上來說，你一定有某個 moment 反覆去執行這個。
 */
 Route::post('admin/tools/createProductRedis', 'Admin\ToolController@createProductRedis');
+
+Route::get('products/{id}/sharedUrl', 'ProductController@sharedUrl');

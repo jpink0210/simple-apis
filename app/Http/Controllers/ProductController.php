@@ -6,13 +6,21 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use App\Http\Services\ShortUrlService;
+
 class ProductController extends Controller
 {
+    protected $shortUrlService;
+    public function __construct(ShortUrlService $shortUrlService)
+    {
+        $this->shortUrlService = $shortUrlService;
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    
     public function index()
     {
         /*
@@ -109,5 +117,14 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         //
+    }
+
+    public function sharedUrl($id)
+    {
+        // 假設有查看特定使用者分享次數的邏輯
+        // eg: auth()->user()->checkShareCount...
+        // $this->authService->fakeReturn(); ( 後面才上到，先註解 )
+        $url = $this->shortUrlService->makeSortUrl("http://localhost:3000/products/$id");
+        return response(['url' => $url]);
     }
 }
