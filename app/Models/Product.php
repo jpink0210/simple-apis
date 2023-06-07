@@ -36,4 +36,10 @@ class Product extends Model
         // 代表有非常多 訂單 下面的 訂貨，貨源是這個產品
         return $this->hasMany(OrderItem::class);
     }
+
+    public function favorited_users()
+    {
+        // 第二個參數：針對哪個標去查詢
+        return $this->belongsToMany(User::class, 'favorites');
+    }
 }
