@@ -27,4 +27,24 @@ class ProductController extends Controller
                                            'productCount' => $productCount,
                                            'productPages' => $productPages]);
     }
+
+    public function uploadImage(Request $request)
+    {
+        // file('product_image') 這是 file 格式下，放圖片的地方，你可以 dd($request)
+        $file = $request->file('product_image');
+        $productId = $request->input('product_id', null);
+        if (is_null($productId)) {
+            return redirect()->back()->withErrors(['msg' => '參數錯誤']);
+        }
+        $product = Product::find($productId);
+
+        // 這裡的 store 是儲存在專案的 public 路徑之下
+        $path = $file->store('public/images');
+        $product->images()->create([
+            'filename'        => $file->getClientOriginalName(),
+            'path'            => $path,
+        ]);
+
+        return redirect()->back();
+    }
 }

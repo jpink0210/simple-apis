@@ -2,6 +2,16 @@
 @section('content')
 <h2 >產品列表</h2>
 <span>產品總數: {{ $productCount }} </span>
+<!-- 這是搭配 withErrors Operator, 凡事進入頁面有錯誤佇列會顯示，一次性的 -->
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 <table>
   <thead>
     <tr>
