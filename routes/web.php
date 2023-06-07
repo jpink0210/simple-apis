@@ -52,3 +52,8 @@ Route::post('admin/orders/{id}/delivery', 'Admin\OrderController@delivery');
 Route::resource('admin/orders', 'Admin\OrderController');
 
 Route::post('admin/tools/updateProductPrice', 'Admin\ToolController@updateProductPrice');
+
+/*
+就排程上來說，你一定有某個 moment 反覆去執行這個。
+*/
+Route::post('admin/tools/createProductRedis', 'Admin\ToolController@createProductRedis');

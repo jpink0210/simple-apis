@@ -37,8 +37,7 @@ class ProductController extends Controller
             $products = DB::table('products')->where('id', 1)->dump();
         */ 
 
-
-
+        // $products = json_decode(Redis::get('products'));
         $products = DB::table('products')->select('price')->addSelect('quantity')->get();
 
         return response($products);
