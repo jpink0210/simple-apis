@@ -32,13 +32,43 @@ class Handler extends ExceptionHandler
     /**
      * Register the exception handling callbacks for the application.
      *
+     * exception: 錯誤訊息的類別是什麼： get_class
+     * 這是內建 Exception 套件報錯回傳的地方
+     * 
      * @return void
      */
     public function register()
     {
-        $this->reportable(function (Throwable $e) {
-            //
+        $this->reportable(function (\Throwable $exception) {
+            $user = auth()->user();
+            LogError::create([
+                'user_id'    => $user ? $user->id : 0,
+                'message'   => $exception->getMessage(),
+                'exception' => get_class($exception),
+                'line'      => $exception->getLine(),
+                'trace'     => array_map(
+                    function ($trace) {
+                        unset($trace['args']);
+                        return $trace;
+                    },
+                    $exception->getTrace()
+                ),
+                'method'      => request()->getMethod(),
+                'params'      => request()->all(),
+                'uri'         => request()->getPathInfo(),
+                'user_agent'  => request()->userAgent(),
+                'header'      => request()->headers->all()
+            ]);
         });
+
+        // 直接製作錯誤畫面，並且導過去
+        // $this->renderable(function (\Exception $e) {
+        //     return response()->view('error', [], 500);
+        // });
+
+        // $this->reportable(function (Throwable $e) {
+        //     //
+        // });
     }
 
     protected function unauthenticated($request, AuthenticationException $exception)
