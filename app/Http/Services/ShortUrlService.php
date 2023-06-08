@@ -36,7 +36,10 @@ class ShortUrlService implements ShortUrlInterfaceService
                 'headers' => ['Content-Type' => 'application/json'],
                 'body' => json_encode($data)
             ];
+
+            // 1st: 自命名前綴詞 , Log 會傳到 logs 的資料夾
             Log::info('postData', ['data' => $postData]);
+            
             $response = $this->client->request(
                 'POST',
                 'https://api.pics.ee/v1/links/?access_token='.$accessToken,
