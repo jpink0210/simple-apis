@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Product extends Model
 {
@@ -50,5 +51,22 @@ class Product extends Model
          * attachable_type
          * attachable_id
         */
+    }
+    /*
+        getImageUrlAttribute 是一個假名
+        獲得 $product['image_url']
+
+        啟動 storage：
+            他是一個講 public 端口 曝露出去給外部使用的套件
+            php artisan storage:link 才會啟動
+    */
+    public function getImageUrlAttribute()
+    {
+        $images = $this->images;
+        if ($images->isNotEmpty()) {
+            return Storage::url($images->last()->path);
+        } else {
+            return null;
+        }
     }
 }
