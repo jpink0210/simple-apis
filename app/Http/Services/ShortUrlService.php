@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Log;
 class ShortUrlService implements ShortUrlInterfaceService
 {
     protected $client;
+    protected $testProtected = 321;
+    private $testPrivate = 123;
     public function __construct()
     {
         $this->client = new Client();
