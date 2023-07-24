@@ -17,5 +17,8 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
 
         // $this->call(ProductSeeder::class); 可以互 call 其他 seeder
+        $this->call(ProductSeeder::class);
+        $this->call(ImageSeeder::class);
+
     }
 }
