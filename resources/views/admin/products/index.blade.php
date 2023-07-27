@@ -1,6 +1,6 @@
 @extends('layouts.admin_app')
 @section('content')
-<h2 >產品列表</h2>
+<h2 class="my-4">產品列表</h2>
 <span>產品總數: {{ $productCount }} </span>
 <!-- 這是搭配 withErrors Operator, 凡事進入頁面有錯誤佇列會顯示，一次性的 -->
 @if ($errors->any())
@@ -15,11 +15,11 @@
 <table>
   <thead>
     <tr>
-      <td>編號</td>
+      <td class="text-nowrap">編號</td>
       <td>標題</td>
       <td>內容</td>
-      <td>價格</td>
-      <td>數量</td>
+      <td class="text-nowrap">價格</td>
+      <td class="text-nowrap">數量</td>
       <td>圖片</td>
       <td>功能</td>
     </tr>
@@ -32,7 +32,7 @@
         <td>{{ $product->content}}</td>
         <td>{{ $product->price}}</td>
         <td>{{ $product->quantity}}</td>
-        <td>
+        <td class="text-nowrap">
           @if($product->image_url)
             <a href="{{ $product->image_url}}">圖片連結</a>
           @endif

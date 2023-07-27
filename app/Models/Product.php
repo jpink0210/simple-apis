@@ -63,8 +63,9 @@ class Product extends Model
     public function getImageUrlAttribute()
     {
         $images = $this->images;
+        $path = $images->last()->path;
         if ($images->isNotEmpty()) {
-            return Storage::url($images->last()->path);
+            return str_contains($path, 'https') ? $path : Storage::url($path);
         } else {
             return null;
         }

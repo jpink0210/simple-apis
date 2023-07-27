@@ -14,11 +14,11 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $dataPerPage = 5;
+        $dataPerPage = 10;
         $productCount = Product::count();
         $productPages = ceil($productCount / $dataPerPage);
         $currentPage = isset($request->all()['page']) ? $request->all()['page'] : 1;
-        $products = Product::orderBy('created_at', 'desc')
+        $products = Product::orderBy('id')
                        ->offset($dataPerPage * ($currentPage - 1))
                        ->limit($dataPerPage)
                        ->get();

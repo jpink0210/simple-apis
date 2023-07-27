@@ -1,10 +1,6 @@
 @extends('layouts.admin_app')
 @section('content')
-@php
-  use Illuminate\Support\Facades\DB;
-@endphp
-{{ DB::enableQueryLog() }}
-<h2 >訂單管理</h2>
+<h2 class="my-4">訂單管理</h2>
 <span>訂單總數: {{ $orderCount }} </span>
 <div>
   <a href="/admin/orders/export">匯出訂單Excel</a>
@@ -41,5 +37,4 @@
       <a href="/admin/orders?page={{ $i }}">第 {{ $i }} 頁</a> &nbsp;
   @endfor
 </div>
-{{ dd(DB::getQueryLog()) }}
 @endsection
