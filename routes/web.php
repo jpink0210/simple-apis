@@ -18,8 +18,9 @@ use Illuminate\Support\Facades\Route;
 // });
 
 
-Route::get('/', 'WebController@index');
-Route::get('/contactUs', 'WebController@contactUs');
+Route::get('/', 'WebController@index')->name('home');
+Route::get('/contactUs', 'WebController@contactUs')->name('contactUs');
+
 Route::post('/readNotification', 'WebController@readNotification');
 
 
@@ -41,9 +42,13 @@ Route::group(
         Route::post('carts/checkout', 'CartController@checkout');
     }
 );
+Route::get('admin/products', 'Admin\ProductController@index')->name('admin-products');
+Route::get('admin/orders', 'Admin\OrderController@index')->name('admin-orders');
+
 Route::resource('admin/products', 'Admin\ProductController');
 Route::post('admin/orders/{id}/delivery', 'Admin\OrderController@delivery');
 Route::resource('admin/orders', 'Admin\OrderController');
+
 
 Route::post('admin/tools/updateProductPrice', 'Admin\ToolController@updateProductPrice');
 Route::post('admin/products/uploadImage', 'Admin\ProductController@uploadImage');
