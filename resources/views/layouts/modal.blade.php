@@ -19,6 +19,13 @@
               </li>
           @endforeach
         </ul>
+        @if ( count($notifications) === 0)
+          @auth
+            <p>無</p>
+          @else
+            <p>請先登入</p>
+          @endauth
+        @endif
       </div>
     </div>
   </div>

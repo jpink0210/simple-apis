@@ -2,7 +2,7 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link">咖啡商城 <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="{{ route('home') }}">咖啡商城 <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{{ route('contactUs') }}">聯絡我們</a>
@@ -13,10 +13,10 @@
     </ul>
     <!-- data-target 用一個 id 去綁定 modal -->
     </div>
-      <input class="btn btn-primary" data-toggle="modal" data-target="#notification" type="button" value="通知">
+      <input class="btn btn-primary mr-2" data-toggle="modal" data-target="#notification" type="button" value="通知">
       <div class="fixed top-0 right-0 px-6 py-4 sm:block">
           @auth
-              <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 underline">Dashboard</a>
+              <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 underline">會員中心</a>
           @else
               <a href="{{ route('login') }}" class="text-sm text-gray-700 underline">Log in</a>
 
