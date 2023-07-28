@@ -65,7 +65,9 @@ class OrderController extends Controller
         if ($order->is_shipped) {
             return response(['result' => false]);
         } else {
+            // 把舊的購物車 結單做註記
             $order->update(['is_shipped' => true]);
+            // 順便通知
             $order->user->notify(new OrderDeliver());
             return response(['result' => true]);
             ;

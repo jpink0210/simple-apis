@@ -14,10 +14,11 @@
 </div>
 <table class="table" style="margin-top:30px;">
   <thead>
-    <tr>
+    <tr class="text-nowrap">
       <td>標題</td>
       <td>內容</td>
       <td>價格</td>
+      <td>數量</td>
       <td></td>
     </tr>
   </thead>
@@ -28,14 +29,20 @@
         <td>{{ $product->content }}</td>
         <td style="{{ $product->price < 300 ? 'color:red; font-size:22px' : ''  }}" >{{ $product->price }}</td>
         <td>
-          <a href="www.google.com"><i class="fab fa-apple" style='color: red; font-size: 30px'></i> 商品細節</a>
-          <input class='check_product btn btn-success' type='button' value='確認商品數量' data-id="{{ $product->id }}">
-          <input class='check_shared_url  btn btn-warning' type='button' value='分享商品' data-id="{{ $product->id }}">
+          <div>{{ $product->quantity }} </div>
+        </td>
+        <td>
+          @auth
+            <button class="btn btn-warning">加入購物車</button>
+          @else
+            <input class="btn btn-warning" data-toggle="modal" data-target="#loginNotYet" type="button" value="加入購物車">
+          @endauth
         </td>
       </tr>
     @endforeach
   </tbody>
 </table>
+@include('modal.loginNotYet')
 <div id="app" v-cloak>
   <example-component></example-component>
 </div>

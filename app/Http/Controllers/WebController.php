@@ -21,8 +21,8 @@ class WebController extends Controller
     */
     public function __construct()
     {
-        $user = auth()->user() ? auth()->user() : User::find(1);
-        $this->notifications = $user->notifications ?? [];
+        // $user = auth()->user();
+        // $this->notifications = $user ? $user->notifications : [];
     }
     /**
      * Display a listing of the resource.
@@ -31,6 +31,9 @@ class WebController extends Controller
      */
     public function index(Request $request)
     {
+        $user = auth()->user();
+        $this->notifications = $user ? $user->notifications : [];
+
         $products = Product::all();
         return view('webs.index', ['products' => $products, 'notifications' => $this->notifications]);
     }
@@ -42,6 +45,8 @@ class WebController extends Controller
      */
     public function contactUs()
     {
+        $user = auth()->user();
+        $this->notifications = $user ? $user->notifications : [];
         return view('webs.contact_us', ['notifications' => $this->notifications]);
     }
 
