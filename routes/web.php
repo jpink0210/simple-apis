@@ -13,15 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-
-Route::resource('column', 'ColumnController');
-Route::resource('today', 'TodayController');
-Route::resource('product', 'ProductController');
-
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 
 Route::get('/', 'WebController@index');
@@ -60,3 +54,9 @@ Route::post('admin/products/uploadImage', 'Admin\ProductController@uploadImage')
 Route::post('admin/tools/createProductRedis', 'Admin\ToolController@createProductRedis');
 
 Route::get('products/{id}/sharedUrl', 'ProductController@sharedUrl');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';

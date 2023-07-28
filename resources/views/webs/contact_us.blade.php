@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.mall')
 
 @section('content')
   <h3>聯絡我們</h3>

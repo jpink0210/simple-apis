@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.mall')
 @section('content')
 <style>
   body{
