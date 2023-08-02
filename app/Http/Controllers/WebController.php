@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Product;
 use App\Models\User;
+
+use App\Http\Controllers\CartController;
+
 /*
     這也是 Laravel 預設準備的
     就是針對 notifications 這張邊的 Model
@@ -35,7 +38,15 @@ class WebController extends Controller
         $this->notifications = $user ? $user->notifications : [];
 
         $products = Product::all();
-        return view('webs.index', ['products' => $products, 'notifications' => $this->notifications]);
+
+        $cart_id = 0;
+        // 確認 未登入/登入 狀態
+        if ($user) {
+            $cart = (new CartController)->index();
+            $cart_id = $cart ? json_decode($cart->content())->id : 0;
+        }
+
+        return view('webs.index', ['products' => $products, 'notifications' => $this->notifications, 'cart_id' => $cart_id ]);
     }
 
     /**
