@@ -15,3 +15,9 @@
         </div>
     </div>
 </x-app-layout>
+
+<script>
+    const token = `<?php echo $token; ?>`;
+    if (token) $.cookie("jwt", token);
+
+</script>
