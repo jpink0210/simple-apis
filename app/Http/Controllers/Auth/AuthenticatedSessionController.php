@@ -32,7 +32,12 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        // ../AuthController.php
+        $user = $request->user();
+        $tokenResult = $user->createToken('Token');
+        $tokenResult->token->save();
+
+        return view('dashboard', ['token' => $tokenResult->accessToken]);
     }
 
     /**
