@@ -60,16 +60,16 @@
         "Content-Type": "application/json",
         Authorization: `Bearer ${jwtToken}`
       },
-      method: "Get",
+      method: "Post",
       url: `/cart_items`,
-      data: {
+      data: JSON.stringify({
         cart_id: JSON.parse( `<?php echo $cart_id; ?>` ),
-        product_id,
-        quantity
-      }
+        product_id: product_id,
+        quantity: quantity
+      })
     })
-    .done(function( msg ) {
-      alert('請分享此縮網址:' + msg.url)
+    .done(function( resp ) {
+      console.log(resp);
     });
   }
 
