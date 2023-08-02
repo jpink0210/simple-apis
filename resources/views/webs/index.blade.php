@@ -33,7 +33,7 @@
         </td>
         <td>
           @auth
-            <button class="btn btn-warning">加入購物車</button>
+            <button class="btn btn-warning" onclick="addToCart({{ $product->id }}, 1)">加入購物車</button>
           @else
             <input class="btn btn-warning" data-toggle="modal" data-target="#loginNotYet" type="button" value="加入購物車">
           @endauth
@@ -47,6 +47,32 @@
   <example-component></example-component>
 </div>
 <script>
+
+  function addToCart(product_id, quantity) {
+    console.log(product_id, quantity)
+    console.log($('meta[name="csrf-token"]').attr('content'))
+    // https://laravel.com/docs/10.x/csrf#csrf-x-csrf-token
+
+    const jwtToken = $.cookie("jwt");
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${jwtToken}`
+      },
+      method: "Get",
+      url: `/cart_items`,
+      data: {
+        cart_id: JSON.parse( `<?php echo $cart_id; ?>` ),
+        product_id,
+        quantity
+      }
+    })
+    .done(function( msg ) {
+      alert('請分享此縮網址:' + msg.url)
+    });
+  }
+
   $('.check_product').click(function(){
     $.ajax({
       method: "POST",
@@ -60,15 +86,6 @@
       else{
         alert('商品數量不足')
       }
-    });
-  })
-  $('.check_shared_url').click(function(){
-    $.ajax({
-      method: "Get",
-      url: `/products/${$(this).data('id')}/sharedUrl`,
-    })
-    .done(function( msg ) {
-      alert('請分享此縮網址:' + msg.url)
     });
   })
 </script>

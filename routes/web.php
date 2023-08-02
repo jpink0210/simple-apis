@@ -37,7 +37,10 @@ Route::group(
         Route::get('logout', 'AuthController@logout');
 
         Route::resource('cart', 'CartController');
-        Route::resource('cart-items', 'CartItemController');
+
+        Route::post('cart_items', 'CartItemController@store')->name('addCartItem');
+
+        Route::resource('cart_items', 'CartItemController');
 
         Route::post('carts/checkout', 'CartController@checkout');
     }
@@ -61,7 +64,7 @@ Route::post('admin/tools/createProductRedis', 'Admin\ToolController@createProduc
 Route::get('products/{id}/sharedUrl', 'ProductController@sharedUrl');
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('dashboard', ['token' => '']);
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
