@@ -63,8 +63,16 @@ Route::post('admin/tools/createProductRedis', 'Admin\ToolController@createProduc
 
 Route::get('products/{id}/sharedUrl', 'ProductController@sharedUrl');
 
-Route::get('/dashboard', function () {
-    return view('dashboard', ['token' => '']);
-})->middleware(['auth'])->name('dashboard');
+
+Route::prefix('dashboard')->group(function () {
+    Route::get('/', function () {
+        return view('member/dashboard', ['token' => '']);
+    })->middleware(['auth'])->name('dashboard');
+    
+    Route::get('mycart', function () {
+        return view('member/mycart');
+    })->middleware(['auth'])->name('mycart');
+    
+});
 
 require __DIR__.'/auth.php';
