@@ -14,7 +14,7 @@
                     <div class="d-flex justify-content-between">
 
                         <div class="h2">購物車總金額: ${{$total}}</div>
-                        <button class="btn btn-lg btn-success">結帳</button>
+                        <button onclick="checkout()" class="btn btn-lg btn-success">結帳</button>
                     </div>
                     <hr>
                     <table>
@@ -66,6 +66,30 @@
             .done(function( resp ) {
                 console.log(resp);
                 window.location.reload();
+            });
+        }
+    }
+
+    function checkout() {
+        var check = confirm("確定結帳？");
+
+        if (check) {
+            const jwtToken = $.cookie("jwt");
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${jwtToken}`
+                },
+                method: "post",
+                url: `/carts/checkout`
+            })
+            .done(function( resp ) {
+                console.log(resp);
+                toastr.success("結帳成功");
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
             });
         }
     }

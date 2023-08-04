@@ -19,7 +19,13 @@
 
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('mycart')" :active="request()->routeIs('mycart')">
-                        {{ __('Mycart') }}
+                        {{ __('我的購物車') }}
+                    </x-nav-link>
+                </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('mycart')" :active="request()->routeIs('myorder')">
+                        {{ __('我的訂單') }}
                     </x-nav-link>
                 </div>
             </div>
