@@ -117,7 +117,12 @@ class CartItemController extends Controller
                  'quantity' => $validatedData['quantity']]
             );
         }
-        return response()->json($result);
+
+
+        return response()->json([
+            'name' => $product->title,
+            'result' => $result
+        ]);
 
         /*
         3. 可以驗證資料格式是否正確:

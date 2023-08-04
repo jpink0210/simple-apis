@@ -49,8 +49,6 @@
 <script>
 
   function addToCart(product_id, quantity) {
-    console.log(product_id, quantity)
-    console.log($('meta[name="csrf-token"]').attr('content'))
     // https://laravel.com/docs/10.x/csrf#csrf-x-csrf-token
 
     const jwtToken = $.cookie("jwt");
@@ -70,6 +68,9 @@
     })
     .done(function( resp ) {
       console.log(resp);
+      var name = `${resp.name.slice(0, 9)}${resp.name.length > 10 ? '...' : ''}`;
+      toastr.success( "新增成功 - " + name);
+
     });
   }
 
