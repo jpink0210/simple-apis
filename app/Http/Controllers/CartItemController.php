@@ -103,11 +103,20 @@ class CartItemController extends Controller
         }
 
         $cart = Cart::find($validatedData['cart_id']);
-        $result = $cart->cartItems()->create(
-            ['product_id' => $product->id,
-             'quantity' => $validatedData['quantity']]
-        );
+        // all for get(), one for first() !
+        $whickCartItem = $cart->cartItems()->where('product_id', $product->id)->first();
 
+        $result = [];
+
+        if ($whickCartItem) {
+            $result = $cart->cartItems()->where('id', $whickCartItem->id)->increment('quantity', $validatedData['quantity']);
+           
+        } else {
+            $result = $cart->cartItems()->create(
+                ['product_id' => $product->id,
+                 'quantity' => $validatedData['quantity']]
+            );
+        }
         return response()->json($result);
 
         /*

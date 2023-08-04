@@ -37,7 +37,7 @@ class AuthenticatedSessionController extends Controller
         $tokenResult = $user->createToken('Token');
         $tokenResult->token->save();
 
-        return view('dashboard', ['token' => $tokenResult->accessToken]);
+        return view('member.dashboard', ['token' => $tokenResult->accessToken]);
     }
 
     /**
