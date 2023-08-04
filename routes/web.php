@@ -69,10 +69,8 @@ Route::prefix('dashboard')->group(function () {
         return view('member/dashboard', ['token' => '']);
     })->middleware(['auth'])->name('dashboard');
     
-    Route::get('mycart', function () {
-        return view('member/mycart');
-    })->middleware(['auth'])->name('mycart');
-    
+    Route::get('mycart', 'Member\MyCartController@index')->middleware(['auth'])->name('mycart');
+   
 });
 
 require __DIR__.'/auth.php';
