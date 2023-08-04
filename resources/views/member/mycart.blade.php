@@ -41,13 +41,7 @@
                             </tr>
                             @endforeach
                         </tbody>
-                        
-
                     </table>
-                
-
-                    
-                    
                 </div>
             </div>
         </div>
@@ -59,7 +53,20 @@
         var check = confirm("確定刪除？");
 
         if (check) {
-            
+            const jwtToken = $.cookie("jwt");
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${jwtToken}`
+                },
+                method: "delete",
+                url: `/cart_items/${cartItemId}`
+            })
+            .done(function( resp ) {
+                console.log(resp);
+                window.location.reload();
+            });
         }
     }
 
