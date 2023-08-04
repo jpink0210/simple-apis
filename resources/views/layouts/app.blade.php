@@ -12,6 +12,7 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        @include('layouts.assets.bootstrap')
 
         <!-- Scripts -->
         @include('layouts.assets.jquery')
