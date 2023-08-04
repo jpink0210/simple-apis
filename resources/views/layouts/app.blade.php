@@ -12,10 +12,10 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-        @include('layouts.assets.bootstrap')
+        @include('assets.bootstrap')
 
         <!-- Scripts -->
-        @include('layouts.assets.jquery')
+        @include('assets.jquery')
         <script src="{{ asset('js/app.js') }}" defer></script>
     </head>
     <body class="font-sans antialiased">
