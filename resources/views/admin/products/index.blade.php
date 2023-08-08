@@ -34,7 +34,7 @@
         <td>{{ $product->quantity}}</td>
         <td class="text-nowrap">
           @if($product->image_url)
-            <a href="{{ $product->image_url}}">圖片連結</a>
+            <a target="_blank"  href="{{ $product->image_url}}">圖片連結</a>
           @endif
         </td>
         <td>

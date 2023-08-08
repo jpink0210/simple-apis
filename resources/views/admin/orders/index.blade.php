@@ -27,7 +27,13 @@
           @endforeach
         </td>
         <td>{{ isset($order->orderItems) ? $order->orderItems->sum('price') : 0 }}</td>
-        <td>{{ $order->is_shipped }}</td>
+        <td>
+          @if( $order->is_shipped )
+            <p class="text-success">結單</p>
+          @else
+            <button class="btn btn-warning" onclick="passOrder({{ $order->id }})">核送訂單</button>
+          @endif
+        </td>
       </tr>
     @endforeach
   </tbody>
@@ -37,4 +43,34 @@
       <a href="/admin/orders?page={{ $i }}">第 {{ $i }} 頁</a> &nbsp;
   @endfor
 </div>
+
+<script>
+  function passOrder (orderId) {
+    var check = confirm("確認訂單？");
+
+    if (check) {
+      
+      const jwtToken = $.cookie("jwt");
+      $.ajax({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${jwtToken}`
+        },
+        method: "Post",
+        url: `/admin/orders/${orderId}/delivery`,
+      })
+      .done(function( resp ) {
+        console.log(resp);
+        toastr.success( "訂單結送完成");
+        setTimeout(() => {
+            window.location.reload();
+        }, 2000);
+
+      });
+    }
+  } 
+
+</script>
 @endsection
+
