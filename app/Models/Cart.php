@@ -79,14 +79,23 @@ class Cart extends Model
                 'user_id' => $this->user_id
             ]);
 
+            $orderTotal = 0;
             foreach ($this->cartItems as $cartItem) {
                 $order->orderItems()->create([
                     'product_id' => $cartItem->product_id,
-                    'price' => $cartItem->product->price
+                    'price' => $cartItem->product->price,
+                    'quantity' => $cartItem->quantity,
+                    'total' => $cartItem->product->price * $cartItem->quantity,
                 ]);
                 $cartItem->product->update(['quantity' => $product->quantity - $cartItem->quantity]);
-
+                $orderTotal += $cartItem->product->price * $cartItem->quantity;
             }
+
+            $this->order()->update([
+                'total' => $orderTotal,
+            ]);
+
+
             // 指這台購物車被結帳了
             $this->update(['checkouted' => true]);
             $order->orderItems; // 多這行，return 會多帶一個欄位 orderItems
