@@ -20,13 +20,12 @@
                                 <td class="pr-4 h3">訂單狀況</td>
                                 <td class="pr-4 h3">上次更新</td>
                                 <td class="pr-4 h3">訂單內容</td>
-                                <td class="pr-4 h3">Count</td>
-                                <td class="pr-4 h3"></td>
+                                <td class="pr-4 h3">訂單金額</td>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach( $orders as $order )
-                                <tr>
+                                <tr class="border-bottom border-light">
                                     <td class="pr-4">
                                         @if($order->is_shipped)
                                             <p class="text-success font-weight-bold">已出貨</p>
@@ -36,14 +35,18 @@
                                     </td>
                                     <td class="pr-4">{{ $order->updated_at}}</td>
                                     <td class="pr-4">
-                                        @foreach( $order->orderItems as $orderItem )
-
-                                            {{ $orderItem->product->title }} /
-
-                                        @endforeach
-                                        共 {{ count($order->orderItems) }} 件
+                                        <div class="py-4">
+                                            @foreach( $order->orderItems as $orderItem )
+                                                {{ $orderItem->product->title }}( ${{$orderItem->product->price}} ) x {{$orderItem->quantity}}
+                                                @if($loop->index < count($order->orderItems) - 1)
+                                                    <br />
+                                                @endif
+                                            @endforeach
+                                        </div>
                                     </td>
-                            
+                                    <td>
+                                        ${{ $order->total }}
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

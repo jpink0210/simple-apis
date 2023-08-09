@@ -23,7 +23,7 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         
-        $dataPerPage = 3;
+        $dataPerPage = 5;
         /*
             whereHas: 確認你 order 下面的關聯有綁好的，才放行
 

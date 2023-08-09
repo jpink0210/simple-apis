@@ -26,7 +26,7 @@
             {{ $orderItem->product->title }} &nbsp;
           @endforeach
         </td>
-        <td>{{ isset($order->orderItems) ? $order->orderItems->sum('price') : 0 }}</td>
+        <td>{{ isset($order->orderItems) ? $order->total : 0 }}</td>
         <td>
           @if( $order->is_shipped )
             <p class="text-success">結單</p>
