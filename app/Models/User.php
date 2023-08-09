@@ -11,6 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 */
 use Illuminate\Notifications\Notifiable;
 use App\Models\Cart;
+use App\Models\Order;
 
 /*
 [Auth]
@@ -65,6 +66,11 @@ class User extends Authenticatable
     public function carts()
     {
         return $this->hasMany(Cart::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
 
     public function favorite_products()
