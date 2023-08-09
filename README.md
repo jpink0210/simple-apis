@@ -7,7 +7,7 @@
 
 #### 部署方式
 
-以 AWS EC2 建立虛擬機，並且設置 RDS 佐以 Subnet Group 連線至 VPC 的 Private Subnets(兩台)。
+以 AWS EC2 虛擬機建立 LAMP 系統，並且設置 RDS 佐以 Subnet Group 連線至 VPC 的 Private Subnets(兩台)。
 
 #### 功能說明 
 
