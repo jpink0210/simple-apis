@@ -1,94 +1,45 @@
-## db setting: .env
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=33060
-DB_DATABASE=SimpleTodo
-DB_USERNAME=root
-DB_PASSWORD=root
-
-## --
-
-public/index.php
-是程式的啟動點
-$app = require_once __DIR__.'/../bootstrap/app.php';
-$app 就是這個應用程式，然後被 kernal 啟動
-app/Http/Kernel.php
-會啟動各個環境黨、config 資料夾、registerProvider(Provider 各種強大功能)、middleware、
-設定路由app/Providers/RouteServiceProvider.php
-最後會得到一個 response
-
-## --
-
-app/Http/Kernel.php
-HandleCors
-ValidatePostSize
-VerifyCsrfToken
-
-protected $routeMiddleware = [
-
-
-
-## --
-
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 商城範例
 
-## About Laravel
+此專案以商城服務形式呈現 **後端開發** 功能，猶如：**會員註冊**、**商品選購**、**購物車結帳**、**訂單核送**等等，以一個流程的方式呈現。內容尚不包括金流串接。下面將以功能面來條列實作內容。
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+#### 部署方式
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+以 AWS EC2 建立虛擬機，並且設置 RDS 佐以 Subnet Group 連線至 VPC 的 Private Subnets(兩台)。
 
-## Learning Laravel
+#### 功能說明 
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- MVC: ORM with both Eloquent and Facade\DB, Middlewares, Validators
+- APIs: CRUD, Images Upload
+- Services: notification, queue, observer
+- auth: Laravel passport, Laravel breeze
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+#### 操作說明
 
-## Laravel Sponsors
+###### 首頁
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+- 此 Demo 專案, 點擊左上角 **Admin** 可前往**後台**
+- 點擊右上角可以進入會員中心
+- 訂單送出成功會新增通知，點擊通知內的文字訊息使**已讀**
+- 點擊商品「加入購物車」購物
 
-### Premium Partners
+![Alt text](/public/images/image.png)
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/)**
-- **[OP.GG](https://op.gg)**
+###### 會員中心
 
-## Contributing
+含三則頁籤，會員首頁/購物車/訂單
+- 購物車點選結帳後，請至**後台**核送才會「出貨」
+- 訂單可以檢視狀況
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+![Alt text](/public/images/image-1.png)
 
-## Code of Conduct
+###### Admin 後台管理
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+含兩則頁籤，產品管理 / 訂單管理
+- 產品管理：產品以 Seeder 自動初始化，尚未開放 API 新增。上傳圖片為安全顧慮關閉，可以 Local 測試。
+- 訂單管理：Demo 的形式，以會員送出訂單之後，Admin 核送之模擬
 
-## Security Vulnerabilities
+![Alt text](/public/images/image-2.png)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

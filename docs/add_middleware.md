@@ -8,6 +8,8 @@ protected $routeMiddleware = 下面
 例如
     'check.dirty' => \Illuminate\Http\Middleware\CheckDirtyWord::class,
 然後在 route/web.php
+```
 Route::group(['middleware' => 'check.dirty'], function() {
     Route::resource ...    
 })
+```
