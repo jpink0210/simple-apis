@@ -12,7 +12,7 @@
 #### 功能說明 
 
 - MVC: ORM with both Eloquent and Facade\DB, Middlewares, Validators
-- APIs: CRUD, Images Upload
+- APIs: JWT token, CRUD, Images Upload
 - Services: notification, queue, observer
 - auth: Laravel passport, Laravel breeze
 
