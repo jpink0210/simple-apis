@@ -62,9 +62,10 @@
         </button>
       </div>
       <div class="modal-body">
+        (Online demo功能關閉，請 clone test or refer to code.)
         <form action="/admin/products/uploadImage" method="post" enctype=multipart/form-data>
           <input type="hidden" id="product_id" name="product_id">
-          <input type="file" id="product_image" name="product_image">
+          <input disabled type="file" id="product_image" name="product_image">
           <input type="submit" value="送出">
         </form>
       </div>
