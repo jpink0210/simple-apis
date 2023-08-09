@@ -43,6 +43,7 @@ Route::group(
         Route::resource('cart_items', 'CartItemController');
 
         Route::post('carts/checkout', 'CartController@checkout');
+
     }
 );
 Route::get('admin/products', 'Admin\ProductController@index')->name('admin-products');
@@ -70,6 +71,7 @@ Route::prefix('dashboard')->group(function () {
     })->middleware(['auth'])->name('dashboard');
     
     Route::get('mycart', 'Member\MyCartController@index')->middleware(['auth'])->name('mycart');
+    Route::get('myorder', 'Member\MyOrderController@index')->middleware(['auth'])->name('myorder');
    
 });
 

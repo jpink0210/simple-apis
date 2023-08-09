@@ -24,7 +24,7 @@
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('mycart')" :active="request()->routeIs('myorder')">
+                    <x-nav-link :href="route('myorder')" :active="request()->routeIs('myorder')">
                         {{ __('我的訂單') }}
                     </x-nav-link>
                 </div>
