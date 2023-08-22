@@ -88,6 +88,7 @@
                 console.log(resp);
                 toastr.success("結帳成功");
                 setTimeout(() => {
+                    // 這裡寫的不太好，等於是用前端機制refresh購物車
                     window.location.reload();
                 }, 2000);
             });
