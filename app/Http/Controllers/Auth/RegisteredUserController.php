@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 
+use App\Http\Controllers\CartController;
+
+
 class RegisteredUserController extends Controller
 {
     /**
@@ -52,7 +55,8 @@ class RegisteredUserController extends Controller
 
         $tokenResult = $user->createToken('Token');
         $tokenResult->token->save();
+        $cart = (new CartController)->index();
 
-        return view('member.dashboard', ['token' => $tokenResult->accessToken]);
+        return view('member.dashboard', ['token' => $tokenResult->accessToken, 'cart' => $cart]);
     }
 }
