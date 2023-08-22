@@ -48,7 +48,11 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
+        // return redirect(RouteServiceProvider::HOME);
 
-        return redirect(RouteServiceProvider::HOME);
+        $tokenResult = $user->createToken('Token');
+        $tokenResult->token->save();
+
+        return view('member.dashboard', ['token' => $tokenResult->accessToken]);
     }
 }
