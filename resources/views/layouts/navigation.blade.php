@@ -78,6 +78,12 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('mycart')" :active="request()->routeIs('mycart')">
+                {{ __('我的購物車') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('myorder')" :active="request()->routeIs('myorder')">
+                {{ __('我的訂單') }}
+            </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->
